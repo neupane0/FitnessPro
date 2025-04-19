@@ -147,13 +147,13 @@
 <div class="navbar">
     <div class="logo">Admin Panel</div>
     <div class="links">
-        <a href="#">Return to Dashboard</a>
-        <a href="#">Statistics</a>
-        <a href="#">Manage Users</a>
-        <a href="#">Admin Profile</a>
-        <a href="#" class="active">Create Admin</a>
+        <a href="AdminDashBoard.jsp">Return to Dashboard</a>
+        <a href="Statistics.jsp">Statistics</a>
+        <a href="Manage.jsp">Manage Users</a>
+        <a href="AdminPanel.jsp">Admin Profile</a>
+        <a href="CreateAdmin.jsp" class="active">Create Admin</a>
         <a href="#">Johan <span class="user-badge">Admin</span></a>
-        <a href="#">Logout</a>
+        <a href="../View/HomePage.jsp">Logout</a>
     </div>
 </div>
 

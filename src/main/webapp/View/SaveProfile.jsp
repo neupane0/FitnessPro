@@ -129,7 +129,7 @@
     <div class="title">Your Fitness Dashboard</div>
     <div class="subtitle">Before generating plans, we need to know more about you</div>
 
-    <form action="saveProfile" method="post">
+    <form action="#" method="post"> <!-- No server action, JavaScript handles redirect -->
         <div class="form-box">
             <h3>Your Fitness Profile</h3>
 
@@ -175,6 +175,16 @@
         </div>
     </form>
 </div>
+
+<script>
+    // Intercept form submission and redirect to UserDashBoard.jsp
+    document.querySelector("form").addEventListener("submit", function(e) {
+        e.preventDefault();  // Stop normal form submission
+        // Optional: show a simple confirmation before redirect
+        alert("Profile saved successfully!");
+        window.location.href = "UserDashBoard.jsp";  // Redirect to your dashboard
+    });
+</script>
 
 </body>
 </html>

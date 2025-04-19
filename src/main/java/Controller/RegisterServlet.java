@@ -2,7 +2,8 @@ package Controller;
 
 
 import Model.User;
-import Model.UserDAO;
+
+import DAO.UserDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,27 +15,31 @@ import java.io.IOException;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
-  
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String adminCode = request.getParameter("adminCode"); // Hidden field or specific form field.
+        String role = request.getParameter("role"); // Expected values: "user" or "admin"
 
-        boolean isAdmin = false;
-        if ("ADMIN123".equals(adminCode)) {  // Simple  code check.
-            isAdmin = true;
-        }
+        boolean isAdmin = "admin".equalsIgnoreCase(role);
 
         User user = new User(fullName, email, password, isAdmin);
-        DAO.UserDAO dao = new DAO.UserDAO();
 
-        if (dao.registerUser(user)) {
-            response.sendRedirect("LoginPage.jsp");
+        UserDAO userDAO = new UserDAO();
+        boolean isRegistered = userDAO.registerUser(user);
+
+        if (isRegistered) {
+            request.setAttribute("successMsg", "Registration successful! Please log in.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            response.sendRedirect("SignUpPage.jsp?error=RegistrationFailed");
+            request.setAttribute("errorMsg", "Something went wrong! Please try again.");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("register.jsp");
     }
 }

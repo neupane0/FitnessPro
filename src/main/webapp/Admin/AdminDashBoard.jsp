@@ -85,9 +85,9 @@
     <div class="navbar">
         <div class="logo">FitnessPro</div>
         <div class="links">
-            <a href="#">Admin Panel</a>
+            <a href="AdminPanel.jsp">Admin Panel</a>
             <a href="#">Johan <span style="background:#A855F7; color:white; padding:2px 5px; border-radius:4px; font-size:12px;">Admin</span></a>
-            <a href="#">Logout</a>
+            <a href="../View/HomePage.jsp">Logout</a>
         </div>
     </div>
 

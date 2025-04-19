@@ -2,7 +2,7 @@ package Controller;
 
 
 import Model.User;
-import Model.UserDAO;
+import DAO.UserDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,31 +16,31 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        DAO.UserDAO dao = new DAO.UserDAO();
-        User user = dao.loginUser(email, password);
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.loginUser(email, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
 
             if (user.isAdmin()) {
-                response.sendRedirect("AdminDashboard.jsp");
+                response.sendRedirect("../../webapp/Admin/AdminDashBoard.jsp");
             } else {
-                response.sendRedirect("UserDashboard.jsp");
+                response.sendRedirect("../../webapp/View/HomePage.jsp");
             }
-
         } else {
-            response.sendRedirect("LoginPage.jsp?error=InvalidCredentials");
+            request.setAttribute("errorMsg", "Invalid email or password!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("login.jsp");
     }
 }

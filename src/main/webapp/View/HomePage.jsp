@@ -213,7 +213,7 @@
         if(type === 'user') {
             content.innerHTML = `
                 <h2>User Login</h2>
-                <form action="UserLoginServlet" method="post">
+                <form id="userLoginForm" action="UserLoginServlet" method="post">
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">Login</button>
@@ -226,25 +226,50 @@
                     <input type="text" name="fullname" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
-
                     <span class="toggle-admin" onclick="toggleAdmin()">Show Admin Options</span>
-
                     <div id="adminKeyField" style="display:none; margin-top:10px;">
                         <input type="text" name="adminkey" placeholder="Enter Admin Key">
                     </div>
-
                     <button type="submit">Sign Up</button>
                 </form>`;
         } 
         else if(type === 'admin') {
             content.innerHTML = `
                 <h2>Admin Login</h2>
-                <form action="AdminLoginServlet" method="post">
+                <form id="adminLoginForm" action="AdminLoginServlet" method="post">
                     <input type="email" name="email" placeholder="Admin Email" required>
                     <input type="password" name="password" placeholder="Admin Password" required>
                     <button type="submit">Login</button>
                 </form>`;
         }
+
+        setTimeout(() => {
+            const userForm = document.getElementById('userLoginForm');
+            const signupForm = document.getElementById('signupForm');
+            const adminForm = document.getElementById('adminLoginForm');
+
+            if (userForm) {
+                userForm.addEventListener('submit', function(e) {
+                    e.preventDefault();  // Stop actual form submission
+                    window.location.href = 'SaveProfile.jsp'; // Navigate after login
+                });
+            }
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();  // Stop actual form submission
+                    alert('Sign Up Successful!');
+                    closeModal(); // Close the modal after success
+                });
+            }
+
+            if (adminForm) {
+                adminForm.addEventListener('submit', function(e) {
+                    e.preventDefault();  // Stop actual form submission
+                    window.location.href = '../Admin/AdminDashBoard.jsp'; // Navigate after admin login
+                });
+            }
+        }, 50);
     }
 
     function closeModal() {

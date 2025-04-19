@@ -93,8 +93,6 @@
         .feature-card p {
             color: #94a3b8;
         }
-
-        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -106,10 +104,8 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            display: none; /* Hidden by default */
+            display: none;
         }
-
-        /* Modal Box */
         .modal {
             background-color: #1e293b;
             padding: 30px;
@@ -120,8 +116,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
             animation: fadeIn 0.3s ease-out;
         }
-
-        /* Modal Form Fields */
         .modal input {
             width: 90%;
             padding: 12px;
@@ -131,7 +125,6 @@
             background: #334155;
             color: white;
         }
-
         .modal button {
             padding: 12px 24px;
             background-color: #a855f7;
@@ -142,7 +135,6 @@
             font-weight: bold;
             margin-top: 10px;
         }
-
         .close-btn {
             background: transparent;
             border: none;
@@ -151,7 +143,13 @@
             float: right;
             cursor: pointer;
         }
-
+        .toggle-admin {
+            color: #c084fc;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -195,7 +193,6 @@
     </div>
 </div>
 
-<!-- Modal Overlay -->
 <div id="modalOverlay" class="modal-overlay">
     <div id="modalBox" class="modal">
         <button class="close-btn" onclick="closeModal()">✖</button>
@@ -205,10 +202,8 @@
     </div>
 </div>
 
-<!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<!-- JavaScript for Modal -->
 <script>
     function openModal(type) {
         const modal = document.getElementById('modalOverlay');
@@ -227,10 +222,17 @@
         else if(type === 'signup') {
             content.innerHTML = `
                 <h2>User Sign Up</h2>
-                <form action="UserSignupServlet" method="post">
+                <form id="signupForm" action="UserSignupServlet" method="post">
                     <input type="text" name="fullname" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
+
+                    <span class="toggle-admin" onclick="toggleAdmin()">Show Admin Options</span>
+
+                    <div id="adminKeyField" style="display:none; margin-top:10px;">
+                        <input type="text" name="adminkey" placeholder="Enter Admin Key">
+                    </div>
+
                     <button type="submit">Sign Up</button>
                 </form>`;
         } 
@@ -247,6 +249,18 @@
 
     function closeModal() {
         document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    function toggleAdmin() {
+        const adminField = document.getElementById('adminKeyField');
+        const toggleText = document.querySelector('.toggle-admin');
+        if (adminField.style.display === 'none') {
+            adminField.style.display = 'block';
+            toggleText.textContent = 'Hide Admin Options';
+        } else {
+            adminField.style.display = 'none';
+            toggleText.textContent = 'Show Admin Options';
+        }
     }
 </script>
 
